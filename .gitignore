@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+npm-debug.log
+
+# Development
+.DS_Store
+.idea/
+*.swp
+*.swo
+*~
+
+# Build files
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.sublime-project
+.sublime-workspace
+
+# OS files
+Thumbs.db

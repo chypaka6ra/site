@@ -1,0 +1,27 @@
+# GitHub Pages Jekyll configuration
+theme: null
+title: Wedding Invitation - LUMIVITE
+description: Digital wedding invitation template
+markdown: kramdown
+permalink: /:title/
+
+# Ignore these files
+exclude:
+  - README.md
+  - CHANGELOG.md
+  - node_modules
+  - .git
+  - .gitignore
+
+# Assets settings
+assets:
+  compress:
+    css: true
+    js: true
+  sources:
+    - _assets
+
+# Build settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
