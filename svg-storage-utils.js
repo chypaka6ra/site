@@ -78,48 +78,6 @@
   }
 
   /**
-   * URL Replacer - replaces external SVG URLs with local paths
-   */
-  class SVGURLReplacer {
-    static install() {
-      waitForSVGStorage(() => {
-        // Replace SVG src in img tags
-        const replaceImageSrcs = () => {
-          document.querySelectorAll('img[src$=".svg"]').forEach(img => {
-            const replacedUrl = window.SVGStorage.replaceSVGUrl(img.src);
-            if (replacedUrl !== img.src) {
-              img.src = replacedUrl;
-              img.dataset.urlReplaced = 'true';
-            }
-          });
-
-          // Replace SVG href in links
-          document.querySelectorAll('link[href$=".svg"]').forEach(link => {
-            const replacedUrl = window.SVGStorage.replaceSVGUrl(link.href);
-            if (replacedUrl !== link.href) {
-              link.href = replacedUrl;
-            }
-          });
-        };
-
-        replaceImageSrcs();
-
-        // Watch for new SVG elements
-        const observer = new MutationObserver(() => {
-          replaceImageSrcs();
-        });
-
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
-
-        console.log('SVG Storage: URL replacer installed');
-      });
-    }
-  }
-
-  /**
    * Fetch interceptor for SVG files
    */
   class SVGFetchInterceptor {
@@ -134,14 +92,10 @@
 
           // Check if it's an SVG request
           if (typeof url === 'string' && url.endsWith('.svg')) {
-            // Replace URL if mapped
-            const replacedUrl = window.SVGStorage.replaceSVGUrl(url);
-            args[0] = replacedUrl;
-
             // Try to get from cache
-            const cached = window.SVGStorage.getSVG(replacedUrl);
+            const cached = window.SVGStorage.getSVG(url);
             if (cached) {
-              console.log(`SVG Fetch: Serving from cache - ${replacedUrl}`);
+              console.log(`SVG Fetch: Serving from cache - ${url}`);
               return Promise.resolve(
                 new Response(cached, {
                   status: 200,
@@ -226,9 +180,6 @@
    * Initialize all utilities
    */
   function init() {
-    // Install URL replacer
-    SVGURLReplacer.install();
-
     // Install fetch interceptor
     SVGFetchInterceptor.install();
 
@@ -243,7 +194,6 @@
     console.log('  SVGStorageConsole.showStats() - Show cache statistics');
     console.log('  SVGStorageConsole.clearCache() - Clear all cached SVGs');
     console.log('  SVGStorageConsole.reloadSVGs() - Reload and cache all SVGs on page');
-    console.log('  SVG.Storage.addUrlMapping(external, local) - Add URL mapping');
   }
 
   // Initialize when page loads
