@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <!-- Date: 10 июня 2026 -->
+  <text x="200" y="60" font-family="Montserrat Alternates, Arial, sans-serif" font-size="48" font-weight="400" fill="#820000" text-anchor="middle">
+    10 июня
+  </text>
+  <text x="200" y="95" font-family="Montserrat Alternates, Arial, sans-serif" font-size="32" font-weight="300" fill="#820000" text-anchor="middle">
+    2026
+  </text>
+</svg>

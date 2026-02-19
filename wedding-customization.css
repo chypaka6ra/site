@@ -1,0 +1,85 @@
+/* Wedding Customization - Replace names and dates */
+
+/* Configuration: Change these values to customize the wedding */
+:root {
+  --bride-name: "Мария";
+  --groom-name: "Василий";
+  --wedding-date-day: "10";
+  --wedding-date-month: "июня";
+  --wedding-date-year: "2026";
+}
+
+/* Hide original images and replace with custom text */
+/* For names overlay - typically appears on first section */
+.custom-names-overlay::before {
+  content: var(--groom-name) " & " var(--bride-name);
+  display: block;
+  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-size: 72px;
+  font-weight: 400;
+  color: #820000;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* For date overlay */
+.custom-date-overlay::before {
+  content: var(--wedding-date-day) " " var(--wedding-date-month);
+  display: block;
+  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: #820000;
+  text-align: center;
+}
+
+.custom-date-overlay::after {
+  content: var(--wedding-date-year);
+  display: block;
+  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: #820000;
+  text-align: center;
+}
+
+/* For schedule overlay */
+.custom-schedule-overlay {
+  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  color: #333;
+}
+
+.custom-schedule-overlay .schedule-item {
+  margin: 20px 0;
+  display: flex;
+  gap: 20px;
+}
+
+.custom-schedule-overlay .schedule-time {
+  font-size: 24px;
+  font-weight: 600;
+  color: #820000;
+  min-width: 80px;
+}
+
+.custom-schedule-overlay .schedule-event {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Hide images that will be replaced */
+.hide-original-image {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Make sure overlays are visible */
+.custom-overlay {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

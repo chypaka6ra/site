@@ -1,0 +1,363 @@
+/* ==========================================
+   WEDDING PAGE CORE STYLES
+   ========================================== */
+
+:root {
+    --primary-color: #820000;
+    --secondary-color: #fbf7ee;
+    --text-color: #333;
+    --border-color: #ddd;
+    --font-main: 'Montserrat Alternates', Arial, sans-serif;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* ========== PRELOADER ========== */
+
+.number .tn-atom:after {
+    content: '%';
+    font-size: 25px;
+}
+
+.number {
+    overflow: hidden;
+    animation: transform-number 3.2s cubic-bezier(0.98, 0.12, 0.18, 1.03);
+    animation-fill-mode: forwards;
+    animation-delay: 0.4s;
+    z-index: 9999;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.number .tn-atom {
+    animation: transform-number-atom 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: 3.6s;
+    font-size: 30px;
+    color: #000000;
+}
+
+@keyframes transform-number-atom {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-10vh); }
+}
+
+@keyframes transform-number {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-45vh); }
+    100% { transform: translateY(-83vh); }
+}
+
+.uc-preloader {
+    z-index: 9998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s ease;
+}
+
+.preloader-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9997;
+    background: var(--secondary-color);
+    transition: transform 1s ease;
+}
+
+.hide {
+    display: none !important;
+}
+
+.slide-up-smooth {
+    transform: translateY(-120%);
+    transition: transform 1.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overflow {
+    overflow: auto !important;
+}
+
+/* ========== MAIN LAYOUT ========== */
+
+main {
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+section {
+    padding: 60px 0;
+    border-bottom: 1px solid #eee;
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+/* ========== HEADER SECTION ========== */
+
+.wedding-header {
+    background: linear-gradient(135deg, #fbf7ee 0%, #fff5ee 100%);
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.wedding-title {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 20px 0;
+    letter-spacing: 2px;
+}
+
+.wedding-subtitle {
+    font-size: 24px;
+    color: #666;
+    margin: 10px 0 30px 0;
+    font-weight: 300;
+}
+
+.wedding-date {
+    margin-top: 30px;
+}
+
+.date-text {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* ========== DETAILS SECTION ========== */
+
+.wedding-details h2 {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.detail-item {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.detail-item h3 {
+    font-size: 18px;
+    color: var(--primary-color);
+    margin: 0 0 10px 0;
+}
+
+.detail-item p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+/* ========== SCHEDULE ========== */
+
+.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.schedule-item {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.schedule-item .time {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 60px;
+}
+
+.schedule-item .event {
+    font-size: 16px;
+    color: #666;
+}
+
+/* ========== RSVP SECTION ========== */
+
+.wedding-rsvp {
+    background: linear-gradient(135deg, #fff5f1 0%, #fff 100%);
+    text-align: center;
+}
+
+.wedding-rsvp h2 {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.wedding-rsvp > .container > p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.contact-links {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.btn-telegram {
+    background-color: #0088cc;
+    color: white;
+}
+
+.btn-telegram:hover {
+    background-color: #006699;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+}
+
+.btn-whatsapp {
+    background-color: #25d366;
+    color: white;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1ea952;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.btn-vk {
+    background-color: #0077ff;
+    color: white;
+}
+
+.btn-vk:hover {
+    background-color: #0055cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+}
+
+/* ========== FOOTER ========== */
+
+.wedding-footer {
+    background-color: #333;
+    color: #ccc;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.wedding-footer p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.footer-note {
+    font-size: 12px;
+    color: #999;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media screen and (max-width: 768px) {
+    .wedding-title {
+        font-size: 40px;
+    }
+
+    .wedding-subtitle {
+        font-size: 18px;
+    }
+
+    .date-text {
+        font-size: 22px;
+    }
+
+    .wedding-details h2,
+    .wedding-rsvp h2 {
+        font-size: 28px;
+    }
+
+    section {
+        padding: 40px 0;
+    }
+
+    .container {
+        padding: 30px 15px;
+    }
+
+    .contact-links {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .schedule-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    @keyframes transform-number-mobile {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-44vh); }
+        100% { transform: translateY(-80vh); }
+    }
+
+    .number {
+        animation: transform-number-mobile 3.2s cubic-bezier(0.98, 0.12, 0.18, 1.03);
+    }
+
+    .wedding-title {
+        font-size: 32px;
+    }
+}

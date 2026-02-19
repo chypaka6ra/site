@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" width="600" height="120">
+  <!-- Василий -->
+  <text x="50" y="80" font-family="Montserrat Alternates, Arial, sans-serif" font-size="72" font-weight="400" fill="#820000" text-anchor="middle">
+    Василий
+  </text>
+
+  <!-- Мария -->
+  <text x="550" y="80" font-family="Montserrat Alternates, Arial, sans-serif" font-size="72" font-weight="400" fill="#820000" text-anchor="middle">
+    Мария
+  </text>
+</svg>
