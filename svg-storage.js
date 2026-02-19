@@ -257,11 +257,65 @@
   }
 
   /**
+   * SVG URL Mapper - maps external URLs to local files
+   */
+  class SVGURLMapper {
+    constructor() {
+      this.urlMappings = new Map();
+      this.initDefaultMappings();
+    }
+
+    /**
+     * Initialize default URL mappings
+     * Maps external URLs to local SVG files
+     */
+    initDefaultMappings() {
+      // Add your URL mappings here
+      // Example: this.addMapping('https://example.com/names.svg', 'files/svg/names-vasily-maria.svg');
+      // The system will check these mappings when loading SVGs
+    }
+
+    /**
+     * Add a URL mapping
+     */
+    addMapping(externalUrl, localPath) {
+      this.urlMappings.set(externalUrl, localPath);
+    }
+
+    /**
+     * Get local path for external URL
+     */
+    getLocalPath(url) {
+      return this.urlMappings.get(url) || null;
+    }
+
+    /**
+     * Check if URL is mapped
+     */
+    isMapped(url) {
+      return this.urlMappings.has(url);
+    }
+
+    /**
+     * Replace external URL with local path
+     */
+    replaceSVGUrl(url) {
+      const localPath = this.getLocalPath(url);
+      if (localPath) {
+        console.log(`SVG Storage: Mapped ${url} -> ${localPath}`);
+        return localPath;
+      }
+      return url;
+    }
+  }
+
+  /**
    * SVG Loader - handles fetching and caching SVGs
    */
   class SVGLoader {
-    constructor(storageManager) {
+    constructor(storageManager, urlMapper) {
       this.storage = storageManager;
+      this.urlMapper = urlMapper;
       this.loadedSVGs = new Set();
     }
 
@@ -269,16 +323,19 @@
      * Load SVG with caching support
      */
     async loadSVG(url) {
+      // Replace external URLs with local paths
+      const resolvedUrl = this.urlMapper.replaceSVGUrl(url);
+
       // Check if already cached
-      const cached = this.storage.getSVG(url);
+      const cached = this.storage.getSVG(resolvedUrl);
       if (cached) {
-        console.log(`SVG Storage: Loaded from cache - ${url}`);
+        console.log(`SVG Storage: Loaded from cache - ${resolvedUrl}`);
         return cached;
       }
 
       try {
         // Fetch from server
-        const response = await fetch(url);
+        const response = await fetch(resolvedUrl);
         if (!response.ok) {
           throw new Error(`Failed to fetch SVG: ${response.statusText}`);
         }
@@ -286,12 +343,12 @@
         const content = await response.text();
 
         // Store in cache
-        await this.storage.storeSVG(url, content);
-        console.log(`SVG Storage: Cached - ${url}`);
+        await this.storage.storeSVG(resolvedUrl, content);
+        console.log(`SVG Storage: Cached - ${resolvedUrl}`);
 
         return content;
       } catch (error) {
-        console.error(`SVG Storage: Error loading SVG ${url}:`, error);
+        console.error(`SVG Storage: Error loading SVG ${resolvedUrl}:`, error);
         return null;
       }
     }
@@ -359,9 +416,10 @@
     }
   }
 
-  // Initialize storage manager and loader
+  // Initialize storage manager, URL mapper, and loader
   const storageManager = new SVGStorageManager();
-  const svgLoader = new SVGLoader(storageManager);
+  const urlMapper = new SVGURLMapper();
+  const svgLoader = new SVGLoader(storageManager, urlMapper);
 
   /**
    * Initialize SVG caching when DOM is ready
@@ -397,7 +455,13 @@
     hasSVG: (url) => storageManager.hasSVG(url),
     clearCache: () => storageManager.clearCache(),
     getStats: () => storageManager.getStats(),
-    cachePageSVGs: () => svgLoader.cachePageSVGs()
+    cachePageSVGs: () => svgLoader.cachePageSVGs(),
+    // URL Mapping API
+    addUrlMapping: (externalUrl, localPath) => urlMapper.addMapping(externalUrl, localPath),
+    getLocalPath: (url) => urlMapper.getLocalPath(url),
+    isMapped: (url) => urlMapper.isMapped(url),
+    replaceSVGUrl: (url) => urlMapper.replaceSVGUrl(url),
+    getMappings: () => Array.from(urlMapper.urlMappings.entries())
   };
 
   console.log('SVG Storage: Module loaded');

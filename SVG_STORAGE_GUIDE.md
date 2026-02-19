@@ -182,6 +182,123 @@ location.reload();
 - 3 SVG файла: ~2.6 КБ
 - Максимум: 5 МБ
 
+## URL Mapping (Замена внешних ссылок)
+
+Система позволяет заменять внешние ссылки на SVG файлы (например, `https://site.com/file.svg`) на локальные пути из директории `/files/svg/`.
+
+### Быстрый старт
+
+В консоли браузера:
+
+```javascript
+// Добавить маппинг для одного файла
+SVGStorage.addUrlMapping(
+  'https://example.com/names.svg',
+  'files/svg/names-vasily-maria.svg'
+);
+
+// Проверить маппинги
+const mappings = SVGStorage.getMappings();
+console.table(mappings);
+```
+
+### Использование в коде
+
+Создайте файл `svg-url-mappings.js`:
+
+```javascript
+// Скопируйте svg-url-mappings-example.js и переименуйте в svg-url-mappings.js
+// Добавьте свои маппинги в функцию setupMappings()
+```
+
+Затем добавьте в `index.html`:
+
+```html
+<!-- Scripts -->
+<script src="svg-storage.js" defer></script>
+<script src="svg-storage-utils.js" defer></script>
+<script src="svg-url-mappings.js" defer></script>  <!-- Новый файл -->
+<script src="script.js" defer></script>
+```
+
+### API для работы с маппингами
+
+```javascript
+// Добавить маппинг
+SVGStorage.addUrlMapping(externalUrl, localPath);
+
+// Получить локальный путь для URL
+const localPath = SVGStorage.getLocalPath(externalUrl);
+
+// Проверить, есть ли маппинг для URL
+const isMapped = SVGStorage.isMapped(externalUrl);
+
+// Заменить URL (использует маппинг, если существует)
+const replacedUrl = SVGStorage.replaceSVGUrl(externalUrl);
+
+// Получить все маппинги
+const mappings = SVGStorage.getMappings();
+```
+
+### Как это работает
+
+1. **URL Replacer**: Находит все SVG элементы на странице и заменяет внешние URLs на локальные пути
+2. **Fetch Interceptor**: Перехватывает fetch запросы и использует маппинги перед загрузкой
+3. **Image Interceptor**: Преобразует локальные SVG в Data URLs для использования в img элементах
+
+### Пример полной конфигурации
+
+```javascript
+// svg-url-mappings.js
+(function() {
+  'use strict';
+
+  function waitForSVGStorage(callback) {
+    if (window.SVGStorage) {
+      callback();
+    } else {
+      setTimeout(() => waitForSVGStorage(callback), 100);
+    }
+  }
+
+  waitForSVGStorage(() => {
+    // Маппинги для tildacdn
+    SVGStorage.addUrlMapping(
+      'https://tildacdn.com/tild111-names.svg',
+      'files/svg/names-vasily-maria.svg'
+    );
+
+    SVGStorage.addUrlMapping(
+      'https://tildacdn.com/tild222-date.svg',
+      'files/svg/wedding-date.svg'
+    );
+
+    SVGStorage.addUrlMapping(
+      'https://tildacdn.com/tild333-schedule.svg',
+      'files/svg/wedding-schedule.svg'
+    );
+
+    console.log('SVG URL Mappings: Configured');
+  });
+})();
+```
+
+### Обнаружение URLs для маппинга
+
+Используйте встроенную функцию в консоли браузера:
+
+```javascript
+// Найти все внешние SVG URLs на странице
+const urls = discoverSVGUrls();
+console.table(urls);
+
+// Результат поможет вам определить, какие URL нужно маппировать
+```
+
+### Также см.
+
+- [SVG_URL_MAPPING_GUIDE.md](./SVG_URL_MAPPING_GUIDE.md) - Подробное руководство по маппингам
+
 ## Решение проблем
 
 ### SVG не загружаются из кэша
