@@ -14,7 +14,7 @@
 .custom-names-overlay::before {
   content: var(--groom-name) " & " var(--bride-name);
   display: block;
-  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-family: 'Old Standard TT', serif;
   font-size: 72px;
   font-weight: 400;
   color: #820000;
@@ -26,7 +26,7 @@
 .custom-date-overlay::before {
   content: var(--wedding-date-day) " " var(--wedding-date-month);
   display: block;
-  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-family: 'Old Standard TT', serif;
   font-size: 48px;
   font-weight: 400;
   color: #820000;
@@ -36,7 +36,7 @@
 .custom-date-overlay::after {
   content: var(--wedding-date-year);
   display: block;
-  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-family: 'Old Standard TT', serif;
   font-size: 32px;
   font-weight: 300;
   color: #820000;
@@ -45,7 +45,7 @@
 
 /* For schedule overlay */
 .custom-schedule-overlay {
-  font-family: 'Montserrat Alternates', Arial, sans-serif;
+  font-family: 'Old Standard TT', serif;
   color: #333;
 }
 
