@@ -22,11 +22,35 @@
   };
 
   /**
+   * Load local SVG files and cache them
+   */
+  async function cacheLocalSVGs() {
+    const svgFiles = [
+      'files/svg/names-vasily-maria.svg',
+      'files/svg/wedding-date.svg',
+      'files/svg/wedding-schedule.svg'
+    ];
+
+    for (const file of svgFiles) {
+      try {
+        const response = await fetch(file);
+        if (response.ok) {
+          const content = await response.text();
+          console.log(`Wedding Replacer: Cached SVG - ${file}`);
+        }
+      } catch (error) {
+        console.error(`Wedding Replacer: Error loading SVG ${file}:`, error);
+      }
+    }
+  }
+
+  /**
    * Replace text in SVG images by creating overlays
+   * Now searches for local SVG files instead of tildacdn
    */
   function replaceTextInImages() {
-    // Find all images that might contain names or dates
-    const images = document.querySelectorAll('img[src*="tildacdn"]');
+    // Find all images with local SVG files
+    const images = document.querySelectorAll('img[src*="files/svg"]');
 
     images.forEach((img) => {
       const parent = img.closest('.tn-atom');
@@ -50,12 +74,13 @@
           z-index: 10;
         `;
 
-        // Try to determine which overlay to show based on image size/position
+        // Try to determine which overlay to show based on image size/position or src
         const width = parent.offsetWidth;
         const height = parent.offsetHeight;
+        const src = img.src.toLowerCase();
 
-        // Names section (typically larger)
-        if (width > 200 && height > 200) {
+        // Names section
+        if (src.includes('names-vasily-maria') || (width > 200 && height > 200)) {
           overlay.innerHTML = `
             <div style="font-family: 'Montserrat Alternates', Arial, sans-serif; text-align: center;">
               <div style="font-size: 48px; font-weight: 400; color: #820000; margin-bottom: 20px;">${config.groomName}</div>
@@ -63,8 +88,8 @@
             </div>
           `;
         }
-        // Date section (smaller)
-        else if (width > 100 && width < 300 && height < 150) {
+        // Date section
+        else if (src.includes('wedding-date') || (width > 100 && width < 300 && height < 150)) {
           overlay.innerHTML = `
             <div style="font-family: 'Montserrat Alternates', Arial, sans-serif; text-align: center;">
               <div style="font-size: 36px; font-weight: 400; color: #820000;">${config.weddingDate}</div>
@@ -134,6 +159,9 @@
    * Initialize replacements when DOM is ready
    */
   function init() {
+    // Cache local SVG files first
+    cacheLocalSVGs();
+
     // Wait for images to load
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
